@@ -254,7 +254,7 @@
               type="text"
               id="fullName"
               name="fullName"
-              placeholder="Enter your full name"
+              placeholder="Enter your first and last name"
               minlength="2"
               maxlength="100"
               autocomplete="name"
@@ -275,28 +275,19 @@
           </div>
 
           <div class="register-field">
-            <label for="accountType">I want to join as</label>
-            <select id="accountType" name="accountType" required>
-              <option value="">Choose account type</option>
-              <option value="CUSTOMER">Customer</option>
-              <option value="PROVIDER">Service Provider</option>
-            </select>
-          </div>
-
-          <div class="register-field">
             <label for="password">Create password</label>
             <input
               type="password"
               id="password"
               name="password"
-              placeholder="At least 8 characters"
-              minlength="8"
-              maxlength="72"
+              placeholder="At least 12 characters"
+              minlength="12"
+              maxlength="1024"
               autocomplete="new-password"
               required
             >
             <small class="password-hint">
-              Use at least 8 characters.
+              Use at least 12 characters.
             </small>
           </div>
 
@@ -307,8 +298,8 @@
               id="confirmPassword"
               name="confirmPassword"
               placeholder="Enter your password again"
-              minlength="8"
-              maxlength="72"
+              minlength="12"
+              maxlength="1024"
               autocomplete="new-password"
               required
             >
@@ -353,9 +344,11 @@
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const message = document.getElementById("registerMessage");
+    const submitButton = registerForm.querySelector('button[type="submit"]');
 
-    function showMessage(text) {
+    function showMessage(text, isError = false) {
       message.textContent = text;
+      message.setAttribute("role", isError ? "alert" : "status");
       message.classList.add("show");
     }
 
@@ -377,17 +370,61 @@
       }
     });
 
-    registerForm.addEventListener("submit", function(event) {
+    registerForm.addEventListener("submit", async function(event) {
       event.preventDefault();
 
       if (!registerForm.reportValidity()) {
         return;
       }
 
-      showMessage(
-        "Your form is valid! Account creation will work after " +
-        "we connect the Spring Boot backend."
-      );
+      const nameParts = document.getElementById("fullName").value.trim().split(/\s+/);
+      if (nameParts.length < 2) {
+        showMessage("Enter both your first and last name.", true);
+        document.getElementById("fullName").focus();
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Creating account...";
+      message.classList.remove("show");
+
+      try {
+        const response = await fetch(
+          new URL("api/auth/register", window.location.href),
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({
+              firstName: nameParts.shift(),
+              lastName: nameParts.join(" "),
+              email: document.getElementById("email").value.trim(),
+              password: password.value
+            })
+          }
+        );
+        const result = await response.json();
+
+        if (!response.ok) {
+          showMessage(result.error || "Account creation failed.", true);
+          return;
+        }
+
+        sessionStorage.setItem("eventhubCsrfToken", result.csrfToken);
+        sessionStorage.setItem(
+          "eventhubUserName",
+          `${result.user.firstName} ${result.user.lastName}`
+        );
+        window.location.assign("dashboard.html");
+      } catch (error) {
+        showMessage(
+          "Could not reach Eventhub. Check that Tomcat is running and try again.",
+          true
+        );
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Create Account";
+      }
     });
   </script>
 </body>

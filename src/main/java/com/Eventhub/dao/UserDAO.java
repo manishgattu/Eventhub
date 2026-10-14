@@ -10,8 +10,7 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    // Get a user by their ID
-    public User getUserById(Long id) {
+    public User getUserById(Long id) throws SQLException {
 
         String sql = "SELECT id, first_name, last_name, email, password_hash, " +
                      "phone, role, status FROM users WHERE id = ?";
@@ -21,28 +20,85 @@ public class UserDAO {
 
             statement.setLong(1, id);
 
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next() ? mapUser(resultSet) : null;
+            }
+        }
+    }
 
-            if (resultSet.next()) {
+    public User getUserByEmail(String email) throws SQLException {
+        String sql = "SELECT id, first_name, last_name, email, password_hash, "
+                + "phone, role, status FROM users WHERE email = ?";
 
-                User user = new User();
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, email);
 
-                user.setId(resultSet.getLong("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPasswordHash(resultSet.getString("password_hash"));
-                user.setPhone(resultSet.getString("phone"));
-                user.setRole(resultSet.getString("role"));
-                user.setStatus(resultSet.getString("status"));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next() ? mapUser(resultSet) : null;
+            }
+        }
+    }
 
-                return user;
+    public long createUser(User user) throws SQLException {
+        String sql = "INSERT INTO users "
+                + "(first_name, last_name, email, password_hash, phone, role, status) "
+                + "VALUES (?, ?, ?, ?, ?, 'CUSTOMER', 'ACTIVE')";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPasswordHash());
+            statement.setString(5, user.getPhone());
+
+            if (statement.executeUpdate() == 0) {
+                throw new SQLException("Creating user failed.");
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if (keys.next()) {
+                    return keys.getLong(1);
+                }
+            }
         }
 
-        return null;
+        throw new SQLException("No ID generated for the user.");
+    }
+
+    public void updatePasswordHash(long userId, String passwordHash)
+            throws SQLException {
+        String sql = "UPDATE users SET password_hash = ? WHERE id = ?";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, passwordHash);
+            statement.setLong(2, userId);
+            statement.executeUpdate();
+        }
+    }
+
+    public boolean promoteToProvider(Long id) throws SQLException {
+        String sql = "UPDATE users SET role = 'PROVIDER' "
+                + "WHERE id = ? AND role = 'CUSTOMER' AND status = 'ACTIVE'";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, id);
+            return statement.executeUpdate() > 0;
+        }
+    }
+
+    private User mapUser(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setId(resultSet.getLong("id"));
+        user.setFirstName(resultSet.getString("first_name"));
+        user.setLastName(resultSet.getString("last_name"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPasswordHash(resultSet.getString("password_hash"));
+        user.setPhone(resultSet.getString("phone"));
+        user.setRole(resultSet.getString("role"));
+        user.setStatus(resultSet.getString("status"));
+        return user;
     }
 }
