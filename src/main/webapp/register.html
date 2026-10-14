@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | Eventhub</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f7f4ff;
+      color: #29233a;
+      font-family: "DM Sans", Arial, sans-serif;
+    }
+
+    .register-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .register-visual {
+      padding: 45px;
+      background: linear-gradient(145deg, #7650d9, #b6a0f7);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .register-logo {
+      color: white;
+      text-decoration: none;
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .register-visual h1 {
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .register-visual p {
+      max-width: 420px;
+      color: #f1eaff;
+      line-height: 1.8;
+    }
+
+    .register-emoji {
+      font-size: 85px;
+      margin-bottom: 20px;
+    }
+
+    .register-main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 25px;
+    }
+
+    .register-card {
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .register-card h2 {
+      font-size: 32px;
+      margin: 0 0 10px;
+    }
+
+    .register-subtitle {
+      color: #77718a;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .register-field {
+      margin-bottom: 17px;
+    }
+
+    .register-field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .register-field input,
+    .register-field select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #e4deef;
+      border-radius: 10px;
+      background: white;
+      font: inherit;
+      color: #29233a;
+      outline-color: #7650d9;
+    }
+
+    .register-field input:focus,
+    .register-field select:focus {
+      border-color: #7650d9;
+    }
+
+    .password-hint {
+      display: block;
+      margin-top: 6px;
+      color: #77718a;
+      font-size: 12px;
+    }
+
+    .register-terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      color: #77718a;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 18px 0;
+    }
+
+    .register-terms input {
+      margin-top: 4px;
+      accent-color: #7650d9;
+    }
+
+    .register-button {
+      width: 100%;
+      padding: 14px;
+      background: #7650d9;
+      border: none;
+      border-radius: 11px;
+      color: white;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .register-button:hover {
+      background: #5d38bd;
+    }
+
+    .register-message {
+      display: none;
+      margin-top: 15px;
+      padding: 13px;
+      background: #eee8ff;
+      color: #5634a7;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .register-message.show {
+      display: block;
+    }
+
+    .register-switch {
+      text-align: center;
+      color: #77718a;
+      font-size: 14px;
+      margin-top: 22px;
+    }
+
+    .register-switch a,
+    .register-back {
+      color: #7650d9;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .register-back {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      .register-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .register-visual {
+        padding: 25px;
+      }
+
+      .register-visual h1 {
+        font-size: 30px;
+        margin-top: 25px;
+      }
+
+      .register-visual p {
+        font-size: 14px;
+      }
+
+      .register-emoji,
+      .register-footer {
+        display: none;
+      }
+
+      .register-main {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="register-layout">
+
+    <section class="register-visual">
+      <a href="index.html" class="register-logo">e. eventhub.</a>
+
+      <div>
+        <div class="register-emoji">✨</div>
+        <h1>Your celebrations start here.</h1>
+        <p>
+          Join Eventhub to discover event services, connect with
+          providers, and plan your next special occasion.
+        </p>
+      </div>
+
+      <p class="register-footer">
+        Discover · Plan · Book · Celebrate.
+      </p>
+    </section>
+
+    <section class="register-main">
+      <div class="register-card">
+
+        <h2>Create your account</h2>
+        <p class="register-subtitle">
+          Join Eventhub and make event planning easier.
+        </p>
+
+        <form id="registerForm">
+
+          <div class="register-field">
+            <label for="fullName">Full name</label>
+            <input
+              type="text"
+              id="fullName"
+              name="fullName"
+              placeholder="Enter your full name"
+              minlength="2"
+              maxlength="100"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="register-field">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="register-field">
+            <label for="accountType">I want to join as</label>
+            <select id="accountType" name="accountType" required>
+              <option value="">Choose account type</option>
+              <option value="CUSTOMER">Customer</option>
+              <option value="PROVIDER">Service Provider</option>
+            </select>
+          </div>
+
+          <div class="register-field">
+            <label for="password">Create password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="At least 8 characters"
+              minlength="8"
+              maxlength="72"
+              autocomplete="new-password"
+              required
+            >
+            <small class="password-hint">
+              Use at least 8 characters.
+            </small>
+          </div>
+
+          <div class="register-field">
+            <label for="confirmPassword">Confirm password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Enter your password again"
+              minlength="8"
+              maxlength="72"
+              autocomplete="new-password"
+              required
+            >
+          </div>
+
+          <label class="register-terms">
+            <input type="checkbox" id="terms" required>
+            <span>
+              I agree to the terms of use and privacy policy.
+            </span>
+          </label>
+
+          <button type="submit" class="register-button">
+            Create Account
+          </button>
+
+          <div
+            id="registerMessage"
+            class="register-message"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+        </form>
+
+        <p class="register-switch">
+          Already have an account?
+          <a href="login.html">Sign in</a>
+        </p>
+
+        <a href="index.html" class="register-back">
+          ← Back to home
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const registerForm = document.getElementById("registerForm");
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const message = document.getElementById("registerMessage");
+
+    function showMessage(text) {
+      message.textContent = text;
+      message.classList.add("show");
+    }
+
+    confirmPassword.addEventListener("input", function() {
+      if (confirmPassword.value &&
+          password.value !== confirmPassword.value) {
+        confirmPassword.setCustomValidity("Passwords do not match.");
+      } else {
+        confirmPassword.setCustomValidity("");
+      }
+    });
+
+    password.addEventListener("input", function() {
+      if (confirmPassword.value &&
+          password.value !== confirmPassword.value) {
+        confirmPassword.setCustomValidity("Passwords do not match.");
+      } else {
+        confirmPassword.setCustomValidity("");
+      }
+    });
+
+    registerForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      if (!registerForm.reportValidity()) {
+        return;
+      }
+
+      showMessage(
+        "Your form is valid! Account creation will work after " +
+        "we connect the Spring Boot backend."
+      );
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Service Details | Eventhub</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #faf9ff;
+      color: #29233a;
+    }
+
+    .details-container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 35px 22px 60px;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #7650d9;
+      text-decoration: none;
+      margin-bottom: 24px;
+    }
+
+    .details-heading {
+      margin-bottom: 24px;
+    }
+
+    .details-heading h1 {
+      font-size: clamp(28px, 4vw, 40px);
+      margin: 12px 0;
+    }
+
+    .details-heading p {
+      color: #77718a;
+    }
+
+    .details-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.9fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .details-main,
+    .booking-card {
+      background: white;
+      border: 1px solid #eee8f7;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .service-image {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .details-content {
+      padding: 25px;
+    }
+
+    .category-label {
+      display: inline-block;
+      background: #eee8ff;
+      color: #6943cb;
+      border-radius: 20px;
+      padding: 7px 12px;
+      font-size: 13px;
+    }
+
+    .details-content h2 {
+      margin: 18px 0 10px;
+    }
+
+    .description {
+      color: #77718a;
+      line-height: 1.8;
+    }
+
+    .info-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 15px 0;
+      border-bottom: 1px solid #f0edf6;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-icon {
+      font-size: 20px;
+    }
+
+    .info-row p {
+      margin: 4px 0 0;
+      color: #77718a;
+      font-size: 14px;
+    }
+
+    .booking-card {
+      padding: 25px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .price {
+      font-size: 29px;
+      font-weight: 700;
+      color: #7650d9;
+      margin: 10px 0 6px;
+    }
+
+    .price-unit {
+      color: #77718a;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e4deef;
+      border-radius: 10px;
+      font: inherit;
+      background: white;
+      color: #29233a;
+      outline-color: #7650d9;
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .book-button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 11px;
+      background: #7650d9;
+      color: white;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .book-button:hover {
+      background: #5d38bd;
+    }
+
+    .booking-note {
+      color: #77718a;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .form-message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f0eaff;
+      color: #5634a7;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .form-message.show {
+      display: block;
+    }
+
+    @media (max-width: 800px) {
+      .details-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-card {
+        position: static;
+      }
+
+      .service-image {
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .details-container {
+        padding: 24px 14px 40px;
+      }
+
+      .details-content,
+      .booking-card {
+        padding: 18px;
+      }
+
+      .service-image {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="logo">e. eventhub.</a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Explore</a>
+      <a href="index.html#how-it-works">How it works</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline">Login</a>
+      <a href="register.html" class="btn btn-primary">Get Started</a>
+    </div>
+  </header>
+
+  <main class="details-container">
+
+    <a href="services.html" class="back-link">
+      ← Back to services
+    </a>
+
+    <div class="details-heading">
+      <span class="category-label" id="serviceCategory">
+        Venue
+      </span>
+
+      <h1 id="serviceName">The Grand Palace</h1>
+
+      <p id="serviceLocation">📍 Madhapur, Hyderabad</p>
+    </div>
+
+    <div class="details-layout">
+
+      <!-- Service information -->
+      <section class="details-main">
+
+        <img
+          id="serviceImage"
+          class="service-image"
+          src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=80"
+          alt="Event service"
+        >
+
+        <div class="details-content">
+
+          <h2>About this service</h2>
+
+          <p class="description" id="serviceDescription">
+            Discover a service for your special occasion.
+            Contact the provider to discuss your event requirements,
+            availability, and arrangements.
+          </p>
+
+          <h2>Service information</h2>
+
+          <div class="info-row">
+            <span class="info-icon">📍</span>
+            <div>
+              <strong>Location</strong>
+              <p id="infoLocation">Madhapur, Hyderabad</p>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <span class="info-icon">🗓️</span>
+            <div>
+              <strong>Booking date</strong>
+              <p>Choose your preferred event date in the form.</p>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <span class="info-icon">💜</span>
+            <div>
+              <strong>Personalized requirements</strong>
+              <p>Share your event details and special requests.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Booking form -->
+      <aside class="booking-card">
+
+        <h2>Request a booking</h2>
+
+        <div class="price" id="servicePrice">₹45,000</div>
+        <p class="price-unit" id="priceUnit">Per event · Indicative price</p>
+
+        <form id="bookingForm">
+
+          <div class="form-group">
+            <label for="customerName">Your full name</label>
+            <input
+              type="text"
+              id="customerName"
+              name="customerName"
+              placeholder="Enter your name"
+              minlength="2"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="customerEmail">Email address</label>
+            <input
+              type="email"
+              id="customerEmail"
+              name="customerEmail"
+              placeholder="you@example.com"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="eventDate">Event date</label>
+            <input
+              type="date"
+              id="eventDate"
+              name="eventDate"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="eventType">Type of event</label>
+            <select id="eventType" name="eventType" required>
+              <option value="">Select event type</option>
+              <option>Wedding</option>
+              <option>Birthday</option>
+              <option>Engagement</option>
+              <option>College Event</option>
+              <option>Corporate Event</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="guestCount">Expected guests</label>
+            <input
+              type="number"
+              id="guestCount"
+              name="guestCount"
+              placeholder="e.g. 100"
+              min="1"
+              max="100000"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="requirements">Special requirements</label>
+            <textarea
+              id="requirements"
+              name="requirements"
+              placeholder="Tell us about your event..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="book-button">
+            Submit Booking Request
+          </button>
+
+          <p class="booking-note">
+            Demo only: this form does not contact a provider,
+            reserve a date, or save a booking to the database yet.
+          </p>
+
+          <div
+            id="formMessage"
+            class="form-message"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+        </form>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>
+      © <span id="year"></span> Eventhub.
+      Every occasion deserves a little magic.
+    </p>
+  </footer>
+
+  <script>
+    const services = {
+      "The Grand Palace": {
+        category: "Venue",
+        location: "Madhapur, Hyderabad",
+        price: 45000,
+        unit: "Per event",
+        image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=80",
+        description: "Explore this event venue for weddings, celebrations, and special occasions. Confirm the capacity, facilities, and availability with the provider."
+      },
+
+      "Royal Feast Catering": {
+        category: "Catering",
+        location: "Kukatpally, Hyderabad",
+        price: 650,
+        unit: "Per person",
+        image: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1000&q=80",
+        description: "Plan food and catering for your celebration. Discuss your menu, dietary requirements, guest count, and service options with the provider."
+      },
+
+      "Moments Photography": {
+        category: "Photography",
+        location: "Gachibowli, Hyderabad",
+        price: 18000,
+        unit: "Per event",
+        image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80",
+        description: "Explore photography services for memorable occasions. Discuss photography coverage, deliverables, and event timings with the provider."
+      },
+
+      "Rhythm Beats DJ": {
+        category: "Music",
+        location: "Kondapur, Hyderabad",
+        price: 12000,
+        unit: "Per event",
+        image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=1000&q=80",
+        description: "Find music and DJ services for your celebration. Confirm the equipment, music preferences, setup, and event duration with the provider."
+      },
+
+      "Petals & Dreams": {
+        category: "Decoration",
+        location: "Banjara Hills, Hyderabad",
+        price: 15000,
+        unit: "Per event",
+        image: "https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=1000&q=80",
+        description: "Explore decoration ideas for your special event. Share your theme, preferred arrangements, venue details, and budget with the provider."
+      },
+
+      "Shubh Muhurtham": {
+        category: "Priest",
+        location: "Secunderabad, Hyderabad",
+        price: 5000,
+        unit: "Per ceremony",
+        image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1000&q=80",
+        description: "Explore priest services for ceremonies and traditional occasions. Discuss the ceremony requirements, preferred language, timing, and arrangements with the provider."
+      }
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedName = params.get("service");
+
+    const service = services[requestedName] || services["The Grand Palace"];
+
+    document.title = service.category + " | Eventhub";
+
+    document.getElementById("serviceName").textContent =
+      requestedName && services[requestedName]
+        ? requestedName
+        : "The Grand Palace";
+
+    document.getElementById("serviceCategory").textContent =
+      service.category;
+
+    document.getElementById("serviceLocation").textContent =
+      "📍 " + service.location;
+
+    document.getElementById("infoLocation").textContent =
+      service.location;
+
+    document.getElementById("servicePrice").textContent =
+      "₹" + service.price.toLocaleString("en-IN");
+
+    document.getElementById("priceUnit").textContent =
+      service.unit + " · Indicative price";
+
+    document.getElementById("serviceImage").src = service.image;
+    document.getElementById("serviceImage").alt =
+      service.category + " service";
+
+    document.getElementById("serviceDescription").textContent =
+      service.description;
+
+    // Do not allow dates in the past.
+    const dateInput = document.getElementById("eventDate");
+    const today = new Date();
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0")
+    ].join("-");
+
+    dateInput.min = localToday;
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    // Demo form: validate and show a local message only.
+    document.getElementById("bookingForm").addEventListener(
+      "submit",
+      function(event) {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+
+        if (!form.reportValidity()) {
+          return;
+        }
+
+        const message = document.getElementById("formMessage");
+
+        message.textContent =
+          "Your demo form is valid! No booking has been saved. " +
+          "The next step is connecting this form to the backend.";
+
+        message.classList.add("show");
+      }
+    );
+  </script>
+
+</body>
+</html>

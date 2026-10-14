@@ -1,0 +1,1349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Eventhub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --purple: #7047eb;
+            --purple-dark: #5733c7;
+            --lavender: #f1edff;
+            --bg: #faf9ff;
+            --text: #25223b;
+            --muted: #858198;
+            --border: #eeebf5;
+            --white: #ffffff;
+            --green: #18845b;
+            --orange: #bc791c;
+            --red: #d34e63;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid var(--border);
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--purple);
+            padding: 0 12px;
+        }
+
+        .logo span {
+            color: var(--text);
+        }
+
+        .tagline {
+            color: var(--muted);
+            font-size: 10px;
+            padding: 0 12px;
+            margin-top: 2px;
+        }
+
+        .nav-heading {
+            margin: 38px 12px 13px;
+            font-size: 10px;
+            color: #a29db5;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 14px;
+            border-radius: 11px;
+            color: #77738b;
+            margin-bottom: 5px;
+            transition: .2s;
+            font-size: 12px;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--purple);
+            background: var(--lavender);
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding: 18px 12px 0;
+        }
+
+        .help-card {
+            background: linear-gradient(135deg, #f0eaff, #faf7ff);
+            border-radius: 14px;
+            padding: 17px;
+            margin-bottom: 18px;
+        }
+
+        .help-card strong {
+            display: block;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .help-card p {
+            font-size: 10px;
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .help-card a {
+            color: var(--purple);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .logout {
+            border: none;
+            background: none;
+            color: #77738b;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            width: 100%;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .logout:hover {
+            color: var(--red);
+        }
+
+        /* Main area */
+
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .topbar {
+            min-height: 82px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 17px 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .topbar h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .topbar p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-button {
+            height: 39px;
+            width: 39px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 11px;
+            font-size: 17px;
+        }
+
+        .avatar {
+            height: 42px;
+            width: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--lavender);
+            color: var(--purple);
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile strong {
+            display: block;
+            font-size: 12px;
+        }
+
+        .profile small {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .content {
+            padding: 30px 35px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        /* Welcome banner */
+
+        .welcome {
+            background: linear-gradient(110deg, #6940df, #9574f7);
+            border-radius: 20px;
+            padding: 31px 34px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .welcome::after {
+            content: "✦";
+            position: absolute;
+            right: 31%;
+            top: -62px;
+            font-size: 180px;
+            color: rgba(255,255,255,.08);
+            pointer-events: none;
+        }
+
+        .welcome h1 {
+            font-size: clamp(22px, 3vw, 29px);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #f0eaff;
+            font-size: 12px;
+            line-height: 1.8;
+            max-width: 460px;
+        }
+
+        .primary-light {
+            background: white;
+            color: var(--purple);
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: none;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .primary-light:hover {
+            background: #f5f1ff;
+        }
+
+        /* Statistics */
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin: 31px 0 17px;
+        }
+
+        .section-title h3 {
+            font-size: 16px;
+        }
+
+        .section-title p {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .text-link {
+            color: var(--purple);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 17px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 0;
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 17px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            font-size: 18px;
+        }
+
+        .icon-purple {
+            background: #f0eaff;
+        }
+
+        .icon-green {
+            background: #e8f8f0;
+        }
+
+        .icon-orange {
+            background: #fff3df;
+        }
+
+        .icon-blue {
+            background: #eaf3ff;
+        }
+
+        .stat-number {
+            font-size: 27px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .stat-note {
+            margin-top: 8px;
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        /* Bookings */
+
+        .booking-panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .booking-toolbar {
+            padding: 17px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .booking-toolbar h3 {
+            font-size: 14px;
+        }
+
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-input,
+        .status-filter {
+            height: 37px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: white;
+            padding: 0 10px;
+            outline: none;
+            color: var(--text);
+            font-size: 11px;
+            min-width: 0;
+        }
+
+        .search-input {
+            width: 175px;
+        }
+
+        .search-input:focus,
+        .status-filter:focus {
+            border-color: var(--purple);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        thead {
+            background: #fcfbff;
+        }
+
+        th {
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 15px 20px;
+        }
+
+        td {
+            padding: 17px 20px;
+            border-top: 1px solid #f2eff8;
+            font-size: 11px;
+        }
+
+        .service-cell {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .service-emoji {
+            height: 42px;
+            width: 42px;
+            display: grid;
+            place-items: center;
+            background: var(--lavender);
+            border-radius: 11px;
+            font-size: 21px;
+            flex-shrink: 0;
+        }
+
+        .service-cell strong {
+            display: block;
+            font-size: 11px;
+        }
+
+        .service-cell small {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .booking-id {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .confirmed {
+            background: #e8f8f0;
+            color: var(--green);
+        }
+
+        .pending {
+            background: #fff4df;
+            color: var(--orange);
+        }
+
+        .completed {
+            background: #efedff;
+            color: #6651c8;
+        }
+
+        .cancelled {
+            background: #fff0f1;
+            color: var(--red);
+        }
+
+        .view-button {
+            background: white;
+            color: var(--purple);
+            border: 1px solid #ded5ff;
+            padding: 7px 12px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .view-button:hover {
+            background: var(--lavender);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* Bottom cards */
+
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        .bottom-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .bottom-card h3 {
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .bottom-card > p {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .category {
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            text-align: center;
+            padding: 15px 5px;
+            transition: .2s;
+        }
+
+        .category:hover {
+            border-color: #c9baff;
+            background: #faf8ff;
+        }
+
+        .category span {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .category strong {
+            font-size: 10px;
+        }
+
+        .event-tip {
+            background: #f8f5ff;
+            padding: 17px;
+            border-radius: 12px;
+            margin-top: 17px;
+            display: flex;
+            gap: 13px;
+        }
+
+        .tip-icon {
+            font-size: 23px;
+        }
+
+        .event-tip strong {
+            font-size: 11px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .event-tip p {
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 10px;
+            padding: 28px 10px;
+        }
+
+        /* Responsive */
+
+        .mobile-menu {
+            display: none;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 9px;
+            width: 38px;
+            height: 38px;
+            font-size: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            .sidebar {
+                width: 215px;
+            }
+
+            .content {
+                padding: 25px 22px;
+            }
+
+            .topbar {
+                padding: 16px 22px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stat-card {
+                padding: 17px;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 100;
+                transform: translateX(-100%);
+                transition: transform .25s ease;
+                width: 260px;
+                box-shadow: 10px 0 30px rgba(30, 20, 60, .08);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu {
+                display: block;
+                flex-shrink: 0;
+            }
+
+            .topbar {
+                padding: 14px 17px;
+                gap: 12px;
+            }
+
+            .topbar h2 {
+                font-size: 15px;
+            }
+
+            .topbar p {
+                font-size: 10px;
+            }
+
+            .top-actions {
+                gap: 9px;
+            }
+
+            .profile-info,
+            .notification-button {
+                display: none;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .welcome {
+                padding: 25px 22px;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .welcome h1 {
+                font-size: 23px;
+            }
+
+            .welcome::after {
+                right: -10px;
+            }
+
+            .stats {
+                gap: 12px;
+            }
+
+            .stat-number {
+                font-size: 23px;
+            }
+
+            .booking-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .filters {
+                width: 100%;
+            }
+
+            .search-input {
+                flex: 1;
+                width: 100%;
+            }
+
+            .status-filter {
+                max-width: 140px;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-card {
+                padding: 13px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            .stat-icon {
+                height: 32px;
+                width: 32px;
+                font-size: 15px;
+            }
+
+            .stat-number {
+                font-size: 21px;
+            }
+
+            .section-title h3 {
+                font-size: 14px;
+            }
+
+            .section-title p {
+                font-size: 10px;
+            }
+
+            .category-grid {
+                gap: 7px;
+            }
+
+            .category strong {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <a href="index.html" class="logo">Event<span>ora</span></a>
+        <p class="tagline">Every occasion deserves a little magic.</p>
+
+        <p class="nav-heading">Workspace</p>
+
+        <a href="dashboard.html" class="nav-link active">
+            <span class="nav-icon">▦</span> Dashboard
+        </a>
+
+        <a href="services.html" class="nav-link">
+            <span class="nav-icon">◇</span> Explore Services
+        </a>
+
+        <a href="#bookings" class="nav-link" id="bookingsNav">
+            <span class="nav-icon">▤</span> My Bookings
+        </a>
+
+        <p class="nav-heading">Account</p>
+
+        <a href="#profile" class="nav-link" id="profileNav">
+            <span class="nav-icon">♙</span> My Profile
+        </a>
+
+        <div class="sidebar-bottom">
+
+            <div class="help-card">
+                <strong>Need a little help? ✨</strong>
+                <p>Let's make your next celebration unforgettable.</p>
+                <a href="services.html">Explore services →</a>
+            </div>
+
+            <button class="logout" id="logoutButton">
+                <span class="nav-icon">↪</span> Log Out
+            </button>
+
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div style="display:flex;align-items:center;gap:12px;">
+                <button class="mobile-menu" id="mobileMenu"
+                    aria-label="Open navigation">☰</button>
+
+                <div>
+                    <h2>My Dashboard</h2>
+                    <p>Manage your events, bookings and plans.</p>
+                </div>
+            </div>
+
+            <div class="top-actions">
+                <button class="icon-button notification-button"
+                    id="notificationButton" aria-label="Notifications">♧</button>
+
+                <div class="profile">
+                    <div class="avatar" id="avatar">G</div>
+
+                    <div class="profile-info">
+                        <strong id="profileName">Guest User</strong>
+                        <small>Customer account</small>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <div class="content">
+
+            <!-- Welcome -->
+            <section class="welcome">
+                <div>
+                    <h1 id="welcomeTitle">Welcome back! ✨</h1>
+                    <p>
+                        Your next beautiful memory starts here.
+                        Explore trusted event services and keep your
+                        celebrations organized in one place.
+                    </p>
+                </div>
+
+                <button class="primary-light"
+                    onclick="window.location.href='services.html'">
+                    + Book a Service
+                </button>
+            </section>
+
+            <!-- Stats -->
+            <div class="section-title">
+                <div>
+                    <h3>Your Overview</h3>
+                    <p>A quick look at your event activity.</p>
+                </div>
+            </div>
+
+            <section class="stats">
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Total Bookings</span>
+                        <span class="stat-icon icon-purple">▤</span>
+                    </div>
+                    <div class="stat-number" id="totalBookings">3</div>
+                    <p class="stat-note">All your demo bookings</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Confirmed</span>
+                        <span class="stat-icon icon-green">✓</span>
+                    </div>
+                    <div class="stat-number" id="confirmedBookings">1</div>
+                    <p class="stat-note">Bookings confirmed</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Pending</span>
+                        <span class="stat-icon icon-orange">◷</span>
+                    </div>
+                    <div class="stat-number" id="pendingBookings">1</div>
+                    <p class="stat-note">Awaiting confirmation</p>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-top">
+                        <span class="stat-label">Completed</span>
+                        <span class="stat-icon icon-blue">★</span>
+                    </div>
+                    <div class="stat-number" id="completedBookings">1</div>
+                    <p class="stat-note">Past event bookings</p>
+                </article>
+
+            </section>
+
+            <!-- Bookings -->
+            <section id="bookings">
+
+                <div class="section-title">
+                    <div>
+                        <h3>Recent Bookings</h3>
+                        <p>Track the status of your event services.</p>
+                    </div>
+                    <a href="services.html" class="text-link">
+                        Find services →
+                    </a>
+                </div>
+
+                <div class="booking-panel">
+
+                    <div class="booking-toolbar">
+                        <h3>Booking History</h3>
+
+                        <div class="filters">
+                            <input
+                                type="search"
+                                class="search-input"
+                                id="bookingSearch"
+                                placeholder="Search bookings..."
+                                aria-label="Search bookings"
+                            >
+
+                            <select class="status-filter" id="statusFilter"
+                                aria-label="Filter by status">
+                                <option value="all">All statuses</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SERVICE</th>
+                                    <th>BOOKING ID</th>
+                                    <th>EVENT DATE</th>
+                                    <th>AMOUNT</th>
+                                    <th>STATUS</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="bookingTable"></tbody>
+                        </table>
+
+                        <div class="empty-state" id="emptyState"
+                            style="display:none;">
+                            No bookings match your search.
+                            <br><br>
+                            <a href="services.html" class="text-link">
+                                Explore services →
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Explore and tips -->
+            <section class="bottom-grid">
+
+                <article class="bottom-card">
+                    <h3>Explore by Category</h3>
+                    <p>Find the right service for your special occasion.</p>
+
+                    <div class="category-grid">
+                        <a href="services.html?category=Venue" class="category">
+                            <span>🏛️</span>
+                            <strong>Venues</strong>
+                        </a>
+
+                        <a href="services.html?category=Catering" class="category">
+                            <span>🍽️</span>
+                            <strong>Catering</strong>
+                        </a>
+
+                        <a href="services.html?category=Photography" class="category">
+                            <span>📸</span>
+                            <strong>Photography</strong>
+                        </a>
+
+                        <a href="services.html?category=Decoration" class="category">
+                            <span>🌸</span>
+                            <strong>Decoration</strong>
+                        </a>
+
+                        <a href="services.html?category=Music" class="category">
+                            <span>🎵</span>
+                            <strong>Music & DJ</strong>
+                        </a>
+
+                        <a href="services.html?category=Priest" class="category">
+                            <span>🪔</span>
+                            <strong>Priest</strong>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bottom-card">
+                    <h3>A Little Event Inspiration ✨</h3>
+                    <p>Simple ways to make planning less stressful.</p>
+
+                    <div class="event-tip">
+                        <span class="tip-icon">📅</span>
+                        <div>
+                            <strong>Plan your date early</strong>
+                            <p>
+                                Shortlist your event date and check venue
+                                availability before finalizing other services.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="event-tip">
+                        <span class="tip-icon">💜</span>
+                        <div>
+                            <strong>Keep your budget in mind</strong>
+                            <p>
+                                Compare service prices and choose options
+                                that work for your celebration.
+                            </p>
+                        </div>
+                    </div>
+
+                    <br>
+                    <a href="services.html" class="text-link">
+                        Start planning →
+                    </a>
+                </article>
+
+            </section>
+
+            <footer class="footer">
+                © 2026 Eventhub. Every occasion deserves a little magic.
+            </footer>
+
+        </div>
+    </main>
+</div>
+
+<script>
+    /*
+      FRONTEND DEMO DATA
+
+      These bookings are examples only.
+      Later, replace them with data received from your Spring Boot API.
+    */
+
+    const bookings = [
+        {
+            id: "EVT-1001",
+            name: "The Grand Palace",
+            category: "Venue",
+            icon: "🏛️",
+            date: "2026-12-15",
+            amount: 45000,
+            status: "Confirmed"
+        },
+        {
+            id: "EVT-1002",
+            name: "Royal Feast Catering",
+            category: "Catering",
+            icon: "🍽️",
+            date: "2026-11-20",
+            amount: 6500,
+            status: "Pending"
+        },
+        {
+            id: "EVT-1003",
+            name: "Moments Photography",
+            category: "Photography",
+            icon: "📸",
+            date: "2026-08-10",
+            amount: 18000,
+            status: "Completed"
+        }
+    ];
+
+    const bookingTable = document.getElementById("bookingTable");
+    const bookingSearch = document.getElementById("bookingSearch");
+    const statusFilter = document.getElementById("statusFilter");
+    const emptyState = document.getElementById("emptyState");
+
+    function formatDate(dateString) {
+        const date = new Date(dateString + "T00:00:00");
+
+        return date.toLocaleDateString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        });
+    }
+
+    function formatAmount(amount) {
+        return new Intl.NumberFormat("en-IN", {
+            style: "currency",
+            currency: "INR",
+            maximumFractionDigits: 0
+        }).format(amount);
+    }
+
+    function getStatusClass(status) {
+        const classes = {
+            Confirmed: "confirmed",
+            Pending: "pending",
+            Completed: "completed",
+            Cancelled: "cancelled"
+        };
+
+        return classes[status] || "pending";
+    }
+
+    function renderBookings() {
+        const searchTerm = bookingSearch.value.trim().toLowerCase();
+        const selectedStatus = statusFilter.value;
+
+        const filteredBookings = bookings.filter(booking => {
+            const matchesSearch =
+                booking.name.toLowerCase().includes(searchTerm) ||
+                booking.id.toLowerCase().includes(searchTerm) ||
+                booking.category.toLowerCase().includes(searchTerm);
+
+            const matchesStatus =
+                selectedStatus === "all" ||
+                booking.status === selectedStatus;
+
+            return matchesSearch && matchesStatus;
+        });
+
+        bookingTable.innerHTML = "";
+
+        filteredBookings.forEach(booking => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>
+                    <div class="service-cell">
+                        <div class="service-emoji">${booking.icon}</div>
+                        <div>
+                            <strong>${booking.name}</strong>
+                            <small>${booking.category}</small>
+                        </div>
+                    </div>
+                </td>
+
+                <td class="booking-id">${booking.id}</td>
+                <td>${formatDate(booking.date)}</td>
+                <td><strong>${formatAmount(booking.amount)}</strong></td>
+
+                <td>
+                    <span class="status ${getStatusClass(booking.status)}">
+                        ${booking.status}
+                    </span>
+                </td>
+
+                <td>
+                    <button class="view-button"
+                        data-booking-id="${booking.id}">
+                        View
+                    </button>
+                </td>
+            `;
+
+            bookingTable.appendChild(row);
+        });
+
+        emptyState.style.display =
+            filteredBookings.length === 0 ? "block" : "none";
+
+        document.getElementById("totalBookings").textContent =
+            bookings.length;
+
+        document.getElementById("confirmedBookings").textContent =
+            bookings.filter(b => b.status === "Confirmed").length;
+
+        document.getElementById("pendingBookings").textContent =
+            bookings.filter(b => b.status === "Pending").length;
+
+        document.getElementById("completedBookings").textContent =
+            bookings.filter(b => b.status === "Completed").length;
+    }
+
+    bookingSearch.addEventListener("input", renderBookings);
+    statusFilter.addEventListener("change", renderBookings);
+
+    // Demo action for the View button
+    bookingTable.addEventListener("click", function(event) {
+        const button = event.target.closest("[data-booking-id]");
+
+        if (!button) return;
+
+        const booking = bookings.find(
+            b => b.id === button.dataset.bookingId
+        );
+
+        if (booking) {
+            alert(
+                "Booking Details\n\n" +
+                "Service: " + booking.name + "\n" +
+                "Booking ID: " + booking.id + "\n" +
+                "Date: " + formatDate(booking.date) + "\n" +
+                "Amount: " + formatAmount(booking.amount) + "\n" +
+                "Status: " + booking.status +
+                "\n\nDemo data only. Backend integration is pending."
+            );
+        }
+    });
+
+    // Mobile sidebar
+    const sidebar = document.getElementById("sidebar");
+
+    document.getElementById("mobileMenu").addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+    });
+
+    document.addEventListener("click", event => {
+        if (
+            window.innerWidth <= 760 &&
+            sidebar.classList.contains("open") &&
+            !sidebar.contains(event.target) &&
+            !event.target.closest("#mobileMenu")
+        ) {
+            sidebar.classList.remove("open");
+        }
+    });
+
+    // Scroll to bookings
+    document.getElementById("bookingsNav").addEventListener("click", () => {
+        document.getElementById("bookings").scrollIntoView({
+            behavior: "smooth"
+        });
+
+        sidebar.classList.remove("open");
+    });
+
+    // Demo profile section
+    document.getElementById("profileNav").addEventListener("click", event => {
+        event.preventDefault();
+
+        alert(
+            "Profile management will be added when the backend is connected."
+        );
+
+        sidebar.classList.remove("open");
+    });
+
+    // Demo notification
+    document.getElementById("notificationButton")
+        .addEventListener("click", () => {
+            alert("You have no new demo notifications.");
+        });
+
+    // Demo logout
+    document.getElementById("logoutButton").addEventListener("click", () => {
+        const confirmLogout = confirm("Do you want to return to the login page?");
+
+        if (confirmLogout) {
+            window.location.href = "login.html";
+        }
+    });
+
+    // Optional demo personalization.
+    // Reads a name only if another page has saved one in this browser.
+    // This is NOT authentication.
+    const savedName = localStorage.getItem("eventhubUserName");
+
+    if (savedName) {
+        const firstName = savedName.trim().split(/\s+/)[0];
+
+        if (firstName) {
+            document.getElementById("welcomeTitle").textContent =
+                `Welcome back, ${firstName}! ✨`;
+
+            document.getElementById("profileName").textContent = savedName;
+
+            document.getElementById("avatar").textContent =
+                firstName.charAt(0).toUpperCase();
+        }
+    }
+
+    renderBookings();
+</script>
+
+</body>
+</html>

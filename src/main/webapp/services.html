@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Services | Eventhub</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .explore-page {
+      max-width: 1200px;
+      margin: auto;
+      padding: 45px 24px;
+    }
+
+    .explore-heading {
+      margin-bottom: 28px;
+    }
+
+    .explore-heading h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      margin-bottom: 10px;
+    }
+
+    .explore-heading p {
+      color: #77718a;
+    }
+
+    .explore-tools {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .explore-tools input,
+    .explore-tools select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #e6e0f2;
+      border-radius: 12px;
+      background: white;
+      font: inherit;
+      outline-color: #7650d9;
+    }
+
+    .explore-categories {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .explore-categories button {
+      border: 1px solid #e6e0f2;
+      background: white;
+      color: #554b6c;
+      border-radius: 25px;
+      padding: 10px 17px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .explore-categories button.active,
+    .explore-categories button:hover {
+      background: #7650d9;
+      color: white;
+      border-color: #7650d9;
+    }
+
+    .results-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .explore-card {
+      background: white;
+      border: 1px solid #eee9f6;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 22px #3020520a;
+    }
+
+    .explore-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .explore-card-content {
+      padding: 18px;
+    }
+
+    .explore-card-content h3 {
+      margin: 9px 0;
+    }
+
+    .explore-category {
+      color: #7650d9;
+      background: #f0eaff;
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .explore-location {
+      color: #77718a;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .explore-price {
+      font-weight: 700;
+      font-size: 19px;
+      margin-bottom: 16px;
+    }
+
+    .explore-price small {
+      font-weight: 400;
+      font-size: 13px;
+      color: #77718a;
+    }
+
+    .explore-book {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      background: #7650d9;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+    }
+
+    .empty-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 50px 15px;
+      color: #77718a;
+    }
+
+    @media (max-width: 850px) {
+      .explore-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .explore-page {
+        padding: 30px 16px;
+      }
+
+      .explore-tools,
+      .explore-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .results-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a href="index.html" class="logo">e. eventhub.</a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="services.html">Explore</a>
+      <a href="index.html#how-it-works">How it works</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="login.html" class="btn btn-outline">Login</a>
+      <a href="register.html" class="btn btn-primary">Get Started</a>
+    </div>
+  </header>
+
+  <main class="explore-page">
+    <div class="explore-heading">
+      <h1>Explore event services ✨</h1>
+      <p>Find the right people and places to make your event special.</p>
+    </div>
+
+    <div class="explore-tools">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search venues, catering, photography..."
+        aria-label="Search services"
+      >
+
+      <input
+        type="text"
+        id="locationInput"
+        placeholder="Location, e.g. Hyderabad"
+        aria-label="Search location"
+      >
+
+      <select id="sortSelect" aria-label="Sort services">
+        <option value="recommended">Recommended</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+        <option value="name">Name: A to Z</option>
+      </select>
+    </div>
+
+    <div class="explore-categories" id="categoryFilters">
+      <button class="active" data-category="All">All Services</button>
+      <button data-category="Venue">Venues</button>
+      <button data-category="Catering">Catering</button>
+      <button data-category="Photography">Photography</button>
+      <button data-category="Music">Music & DJ</button>
+      <button data-category="Decoration">Decoration</button>
+      <button data-category="Priest">Priests</button>
+    </div>
+
+    <div class="results-heading">
+      <h2>Available services</h2>
+      <p id="resultCount" aria-live="polite"></p>
+    </div>
+
+    <div class="explore-grid" id="servicesGrid"></div>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Eventhub. Every occasion deserves a little magic.</p>
+  </footer>
+
+  <script>
+    const services = [
+      {
+        name: "The Grand Palace",
+        category: "Venue",
+        location: "Madhapur, Hyderabad",
+        price: 45000,
+        unit: "per event",
+        image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Royal Feast Catering",
+        category: "Catering",
+        location: "Kukatpally, Hyderabad",
+        price: 650,
+        unit: "per person",
+        image: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Moments Photography",
+        category: "Photography",
+        location: "Gachibowli, Hyderabad",
+        price: 18000,
+        unit: "per event",
+        image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Rhythm Beats DJ",
+        category: "Music",
+        location: "Kondapur, Hyderabad",
+        price: 12000,
+        unit: "per event",
+        image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Petals & Dreams",
+        category: "Decoration",
+        location: "Banjara Hills, Hyderabad",
+        price: 15000,
+        unit: "per event",
+        image: "https://images.unsplash.com/photo-1478146896981-b80fe463b330?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Shubh Muhurtham",
+        category: "Priest",
+        location: "Secunderabad, Hyderabad",
+        price: 5000,
+        unit: "per ceremony",
+        image: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    const grid = document.getElementById("servicesGrid");
+    const searchInput = document.getElementById("searchInput");
+    const locationInput = document.getElementById("locationInput");
+    const sortSelect = document.getElementById("sortSelect");
+    const resultCount = document.getElementById("resultCount");
+    const categoryButtons = document.querySelectorAll(
+      "#categoryFilters button"
+    );
+
+    let selectedCategory = "All";
+
+    function renderServices() {
+      const search = searchInput.value.trim().toLowerCase();
+      const location = locationInput.value.trim().toLowerCase();
+
+      let filtered = services.filter(service => {
+        const matchesSearch =
+          service.name.toLowerCase().includes(search) ||
+          service.category.toLowerCase().includes(search);
+
+        const matchesLocation =
+          service.location.toLowerCase().includes(location);
+
+        const matchesCategory =
+          selectedCategory === "All" ||
+          service.category === selectedCategory;
+
+        return matchesSearch && matchesLocation && matchesCategory;
+      });
+
+      if (sortSelect.value === "low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortSelect.value === "high") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortSelect.value === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      resultCount.textContent =
+        `${filtered.length} service${filtered.length === 1 ? "" : "s"} found`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-results">
+            <h3>No services found</h3>
+            <p>Try another search term or location.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(service => `
+        <article class="explore-card">
+          <img
+            src="${service.image}"
+            alt="${service.name}"
+            loading="lazy"
+          >
+          <div class="explore-card-content">
+            <span class="explore-category">${service.category}</span>
+            <h3>${service.name}</h3>
+            <p class="explore-location">📍 ${service.location}</p>
+            <p class="explore-price">
+              ₹${service.price.toLocaleString("en-IN")}
+              <small>${service.unit}</small>
+            </p>
+            <a class="explore-book"
+               href="service-details.html?service=${encodeURIComponent(service.name)}">
+              View Details
+            </a>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    searchInput.addEventListener("input", renderServices);
+    locationInput.addEventListener("input", renderServices);
+    sortSelect.addEventListener("change", renderServices);
+
+    categoryButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        categoryButtons.forEach(item =>
+          item.classList.remove("active")
+        );
+
+        button.classList.add("active");
+        selectedCategory = button.dataset.category;
+        renderServices();
+      });
+    });
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    renderServices();
+  </script>
+</body>
+</html>

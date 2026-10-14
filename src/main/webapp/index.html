@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover venues and trusted event services for your special occasions.">
+    <title>Eventhub</title>
+    <link rel="icon" type="image/avif" href="fav-icon.avif">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="navbar container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">e.</span>
+                <span>eventhub<span class="logo-dot">.</span></span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle"
+                    aria-label="Open navigation" aria-expanded="false"
+                    aria-controls="navLinks">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#categories" class="nav-link">Explore</a>
+                <a href="#featured" class="nav-link">Services</a>
+                <a href="#how-it-works" class="nav-link">How it works</a>
+                <a href="dashboard.html" class="nav-link">My Dashboard</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="login.html" class="login-link">Log in</a>
+                <a href="register.html" class="btn btn-primary nav-cta">
+                    Get started
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="hero-decoration decoration-one"></div>
+            <div class="hero-decoration decoration-two"></div>
+
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        YOUR EVENT, YOUR WAY
+                    </div>
+
+                    <h1>
+                        Every occasion deserves
+                        <span>a little magic.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Discover amazing venues and trusted event professionals
+                        to make your special moments unforgettable.
+                    </p>
+
+                    <div class="hero-proof">
+                        <div class="avatar-stack" aria-hidden="true">
+                            <span>A</span>
+                            <span>R</span>
+                            <span>S</span>
+                        </div>
+                        <p><strong>One simple place.</strong> Endless possibilities.</p>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <img
+                        class="hero-image"
+                        src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1100&q=85"
+                        alt="Beautiful wedding venue decorated for a special occasion">
+
+                    <div class="floating-card floating-top">
+                        <span class="floating-icon">✦</span>
+                        <div>
+                            <strong>Make it memorable</strong>
+                            <p>Find your perfect match</p>
+                        </div>
+                    </div>
+
+                    <div class="floating-card floating-bottom">
+                        <span class="rating-star">★</span>
+                        <div>
+                            <strong>Discover local talent</strong>
+                            <p>Venues, caterers & more</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="container search-container">
+                <form class="search-panel" id="searchForm">
+                    <div class="search-field">
+                        <span class="field-icon">⌕</span>
+                        <label for="serviceSearch">
+                            WHAT ARE YOU LOOKING FOR?
+                        </label>
+                        <input
+                            type="search"
+                            id="serviceSearch"
+                            placeholder="Venue, catering, photography..."
+                        >
+                    </div>
+
+                    <div class="search-divider"></div>
+
+                    <div class="search-field">
+                        <span class="field-icon">⌖</span>
+                        <label for="locationSearch">LOCATION</label>
+                        <input
+                            type="text"
+                            id="locationSearch"
+                            placeholder="City or area"
+                        >
+                    </div>
+
+                    <button class="btn btn-primary search-button" type="submit">
+                        Search <span aria-hidden="true">→</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="section categories-section" id="categories">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">EXPLORE OUR WORLD</span>
+                        <h2>Everything for your <span>big day.</span></h2>
+                        <p class="section-description">
+                            All the services you need, in one place.
+                        </p>
+                    </div>
+
+                    <a href="#featured" class="text-link">
+                        Explore all services <span>→</span>
+                    </a>
+                </div>
+
+                <div class="category-grid">
+                    <button class="category-card" data-category="Venue">
+                        <span class="category-icon icon-lavender">⌂</span>
+                        <strong>Venues</strong>
+                        <span>Halls & gardens</span>
+                    </button>
+
+                    <button class="category-card" data-category="Catering">
+                        <span class="category-icon icon-peach">♨</span>
+                        <strong>Catering</strong>
+                        <span>Food & dining</span>
+                    </button>
+
+                    <button class="category-card" data-category="Photography">
+                        <span class="category-icon icon-pink">◎</span>
+                        <strong>Photography</strong>
+                        <span>Capture moments</span>
+                    </button>
+
+                    <button class="category-card" data-category="Music">
+                        <span class="category-icon icon-blue">♫</span>
+                        <strong>DJ & Music</strong>
+                        <span>Set the mood</span>
+                    </button>
+
+                    <button class="category-card" data-category="Decoration">
+                        <span class="category-icon icon-yellow">✿</span>
+                        <strong>Decoration</strong>
+                        <span>Beautiful setups</span>
+                    </button>
+
+                    <button class="category-card" data-category="Priest">
+                        <span class="category-icon icon-green">✧</span>
+                        <strong>Pandits</strong>
+                        <span>Ceremonies & rituals</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Services -->
+        <section class="section featured-section" id="featured">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">HANDPICKED FOR YOU</span>
+                        <h2>Discover your <span>next favourite.</span></h2>
+                        <p class="section-description">
+                            Explore event services for every celebration.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="filter-row" id="filterRow">
+                    <button class="filter-chip active" data-filter="All">All services</button>
+                    <button class="filter-chip" data-filter="Venue">Venues</button>
+                    <button class="filter-chip" data-filter="Catering">Catering</button>
+                    <button class="filter-chip" data-filter="Photography">Photography</button>
+                    <button class="filter-chip" data-filter="Music">DJ & Music</button>
+                    <button class="filter-chip" data-filter="Decoration">Decoration</button>
+                    <button class="filter-chip" data-filter="Priest">Pandits</button>
+                </div>
+
+                <div class="service-grid" id="serviceGrid" aria-live="polite">
+                    <!-- JavaScript creates the service cards here. -->
+                </div>
+
+                <p class="empty-state" id="emptyState" hidden>
+                    No services match your search. Try another keyword or location.
+                </p>
+
+                <div class="center-button">
+                    <button class="btn btn-outline" id="resetFilters" type="button">
+                        Show all services
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="section how-section" id="how-it-works">
+            <div class="container">
+                <div class="section-heading centered-heading">
+                    <div>
+                        <span class="section-kicker">SIMPLE AS ONE, TWO, THREE</span>
+                        <h2>Your perfect event, <span>made easy.</span></h2>
+                        <p class="section-description">
+                            Less planning stress. More moments to enjoy.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="steps-grid">
+                    <article class="step-card">
+                        <span class="step-number">01</span>
+                        <div class="step-icon">⌕</div>
+                        <h3>Explore & discover</h3>
+                        <p>Browse venues and event professionals that suit your needs.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <span class="step-number">02</span>
+                        <div class="step-icon">♡</div>
+                        <h3>Choose your favourites</h3>
+                        <p>Compare options, check details and choose your perfect fit.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <span class="step-number">03</span>
+                        <div class="step-icon">✦</div>
+                        <h3>Book & celebrate</h3>
+                        <p>Arrange your booking and focus on enjoying the occasion.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to action -->
+        <section class="cta-section">
+            <div class="container cta-content">
+                <div>
+                    <span class="section-kicker">ARE YOU AN EVENT PROFESSIONAL?</span>
+                    <h2>Let more people discover your talent.</h2>
+                    <p>Showcase your services and connect with people planning their next event.</p>
+                </div>
+
+                <a href="register.html" class="btn btn-light">
+                    Join as a provider <span>→</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="#home" class="logo">
+                    <span class="logo-icon">e.</span>
+                    <span>eventhub<span class="logo-dot">.</span></span>
+                </a>
+                <p>Bringing people, services and celebrations together.</p>
+            </div>
+
+            <div class="footer-column">
+                <h3>Discover</h3>
+                <a href="#categories">Categories</a>
+                <a href="#featured">Popular services</a>
+                <a href="#how-it-works">How it works</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>Account</h3>
+                <a href="login.html">Log in</a>
+                <a href="register.html">Create account</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>For providers</h3>
+                <a href="register.html">List your services</a>
+                <a href="register.html">Join our platform</a>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>© <span id="currentYear"></span> Eventhub. Built for memorable moments.</p>
+            <p>Made with care for every celebration.</p>
+        </div>
+    </footer>
+
+    <!-- Notification for demo interactions -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>

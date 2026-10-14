@@ -1,0 +1,489 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Eventhub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #7047eb;
+            --purple-dark: #5733c7;
+            --lavender: #f2edff;
+            --text: #24213a;
+            --muted: #77758b;
+            --border: #e6e2ef;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #faf9ff;
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .navbar {
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: white;
+            border-bottom: 1px solid #f0edf7;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            color: var(--purple);
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--text);
+        }
+
+        .nav-right {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .nav-right a {
+            color: var(--purple);
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .main {
+            min-height: calc(100vh - 78px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 45px 20px;
+        }
+
+        .login-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 960px;
+            width: 100%;
+            min-height: 560px;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 18px 60px rgba(76, 48, 140, 0.10);
+        }
+
+        .welcome-panel {
+            position: relative;
+            padding: 55px 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: white;
+            background:
+                linear-gradient(145deg, rgba(79, 45, 179, 0.94), rgba(137, 98, 246, 0.86)),
+                url("https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1000&q=80")
+                center/cover;
+        }
+
+        .welcome-panel h1 {
+            font-size: clamp(30px, 4vw, 43px);
+            line-height: 1.25;
+            margin-bottom: 18px;
+        }
+
+        .welcome-panel p {
+            color: #eee7ff;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .welcome-tag {
+            display: inline-block;
+            width: fit-content;
+            padding: 9px 15px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,.35);
+            background: rgba(255,255,255,.12);
+            border-radius: 30px;
+            font-size: 12px;
+        }
+
+        .login-panel {
+            padding: 55px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-panel h2 {
+            font-size: 29px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 49px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0 14px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            background: #fdfcff;
+            transition: .2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--purple);
+            box-shadow: 0 0 0 3px rgba(112, 71, 235, .10);
+        }
+
+        .password-input {
+            padding-right: 65px !important;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: var(--purple);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin: 2px 0 23px;
+            font-size: 11px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--muted);
+        }
+
+        .remember input {
+            accent-color: var(--purple);
+        }
+
+        .forgot {
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        .login-btn {
+            width: 100%;
+            min-height: 49px;
+            background: var(--purple);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .login-btn:hover {
+            background: var(--purple-dark);
+            transform: translateY(-1px);
+        }
+
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.info {
+            background: #f1edff;
+            color: #5733c7;
+        }
+
+        .register-text {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .register-text a {
+            color: var(--purple);
+            font-weight: 700;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 17px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .back-home a:hover,
+        .register-text a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .navbar {
+                height: 68px;
+                padding: 0 5%;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .nav-right {
+                font-size: 11px;
+            }
+
+            .main {
+                min-height: calc(100vh - 68px);
+                padding: 25px 14px;
+            }
+
+            .login-container {
+                grid-template-columns: 1fr;
+                max-width: 440px;
+                min-height: auto;
+                border-radius: 20px;
+            }
+
+            .welcome-panel {
+                padding: 28px 25px;
+                min-height: 185px;
+            }
+
+            .welcome-panel h1 {
+                font-size: 27px;
+                margin-bottom: 10px;
+            }
+
+            .welcome-panel p {
+                font-size: 12px;
+            }
+
+            .welcome-tag {
+                margin-bottom: 15px;
+                padding: 7px 12px;
+            }
+
+            .login-panel {
+                padding: 32px 25px;
+            }
+
+            .login-panel h2 {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .form-options {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">Event<span>hub</span></a>
+
+        <div class="nav-right">
+            New to Eventhub?
+            <a href="register.html">Create account</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="login-container">
+
+            <section class="welcome-panel">
+                <span class="welcome-tag">✨ Every moment matters</span>
+
+                <h1>Every occasion deserves a little magic.</h1>
+
+                <p>
+                    Discover venues, catering, photography, decoration
+                    and more — all in one place with Eventhub.
+                </p>
+            </section>
+
+            <section class="login-panel">
+                <h2>Welcome back!</h2>
+
+                <p class="subtitle">
+                    Sign in to continue planning your perfect event.
+                </p>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+
+                        <div class="input-wrap">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="password-input"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                id="togglePassword"
+                            >
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember">
+                            <input type="checkbox" id="remember">
+                            Remember me
+                        </label>
+
+                        <a href="#" class="forgot" id="forgotPassword">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        Sign In →
+                    </button>
+
+                    <div
+                        class="message info"
+                        id="message"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
+                </form>
+
+                <p class="register-text">
+                    Don't have an account?
+                    <a href="register.html">Sign up</a>
+                </p>
+
+                <p class="back-home">
+                    <a href="index.html">← Back to homepage</a>
+                </p>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+        const message = document.getElementById("message");
+
+        // Show or hide password
+        togglePassword.addEventListener("click", function () {
+            const isHidden = passwordInput.type === "password";
+
+            passwordInput.type = isHidden ? "text" : "password";
+            togglePassword.textContent = isHidden ? "Hide" : "Show";
+        });
+
+        // Demo login form
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            message.textContent =
+                "Your form is working! Login authentication must be connected to your Spring Boot backend before users can sign in.";
+
+            message.classList.add("show");
+        });
+
+        // Demo forgot-password action
+        document.getElementById("forgotPassword")
+            .addEventListener("click", function (event) {
+                event.preventDefault();
+
+                message.textContent =
+                    "Password recovery will be available after the backend and email verification are connected.";
+
+                message.classList.add("show");
+            });
+    </script>
+
+</body>
+</html>
